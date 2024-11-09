@@ -77,15 +77,16 @@ function App(): React.JSX.Element {
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
           <Section title="Nama">
-            Muhammad Nazhmi Najib A.
+            M. Nazhmi Najib A.
           </Section>
           <Section title="NIM">
             22/504674/SV/21678
           </Section>
           <Section title="Kelas">
-            PGPBL B 
+            B
           </Section>
-          <Section title="Link Media Sosial">
+          <Section title="Link Social Media :">
+            Follow for more:
           </Section>
           <LearnMoreLinks />
         </View>
