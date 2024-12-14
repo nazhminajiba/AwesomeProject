@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peta Interaktif dengan Marker dan Form Input</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            background: url('https://images.unsplash.com/photo-1506793252455-1c272a8f35b5') no-repeat center center fixed;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+
+        /* Header */
+        #header {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 36px;
+            font-weight: bold;
+            color: #ffdd57;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+        }
+
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+
+        /* Form Popup */
+        #form-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #2c3e50, #4ca1af);
+            padding: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+            border-radius: 12px;
+            z-index: 1000;
+            width: 90%;
+            max-width: 400px;
+            overflow-y: auto;
+            max-height: 80%;
+            border: 2px solid #e63946;
+        }
+
+        #form-popup h2 {
+            margin-top: 0;
+            color: #ffdd57;
+            text-align: center;
+        }
+
+        /* Dim Background */
+        #dim-background {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        #add-point-btn {
+    position: absolute;
+    bottom: 30px; /* Adjust this value to move the button below the header */
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(90deg, #ff7e5f, #feb47b);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 1000;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+
+        #add-point-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 10px rgba(255, 126, 95, 0.6);
+        }
+
+        /* Refresh Button */
+        #refresh-btn {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(90deg, #4ca1af, #2c3e50);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 1001;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        #refresh-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 10px rgba(76, 161, 175, 0.6);
+        }
+
+        /* Form Input Fields */
+        #mahasiswaForm input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            color: #333;
+            background: #f9f9f9;
+            box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background 0.2s, box-shadow 0.2s;
+        }
+
+        #mahasiswaForm input:focus {
+            background: #fff;
+            box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.15);
+            outline: none;
+        }
+
+        /* Form Buttons */
+        #mahasiswaForm button {
+            background: linear-gradient(90deg, #ff5c8d, #ff004c);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        #mahasiswaForm button:hover {
+            background: linear-gradient(90deg, #ff004c, #ff5c8d);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(255, 92, 141, 0.6);
+        }
+
+        /* Close Button */
+        #close-button {
+            background: #e63946;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100%;
+            transition: background 0.3s;
+        }
+
+        #close-button:hover {
+            background: #c72e39;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div id="dim-background"></div>
+    <div id="header">Map Guard</div>
+    <button id="add-point-btn">Tambah Titik EWS</button>
+    <button id="refresh-btn">🔄</button>
+    <div id="map"></div>
+
+    <div id="form-popup">
+        <h2>Tambah Data EWS</h2>
+        <form id="mahasiswaForm">
+            <input type="text" id="disaster" placeholder="Nama EWS" required />
+            <input type="text" id="deskripsi" placeholder="Deskripsi EWS" required />
+            <input type="text" id="alamat" placeholder="Alamat" required />
+            <input type="hidden" id="latitude" />
+            <input type="hidden" id="longitude" />
+            <button type="submit">Tambah Data</button>
+            <button type="button" id="close-button">Tutup</button>
+        </form>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script>
+        var map = L.map('map').setView([-7.6634, 110.4113], 11);
+
+        // Basemap Layers
+        var openStreetMap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 18,
+            attribution: '© OpenStreetMap contributors'
+        });
+
+        var cartoDB = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+            maxZoom: 18,
+            attribution: '© CartoDB'
+        });
+
+        var esriSatellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            maxZoom: 18,
+            attribution: 'Tiles © Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+        });
+
+        // Koordinat Gunung Merapi
+        var pusatErupsi = [-7.5407, 110.4428];
+
+        // Zona Bahaya Rendah (30 Km)
+        var bahayaRendah = L.circle(pusatErupsi, {
+            color: '#ffeb3b', // Yellow for low risk
+            fillColor: '#ffeb3b',
+            fillOpacity: 0.4,
+            radius: 30000 // In meters
+        }).bindPopup("Zona Bahaya Rendah (KRB I)");
+
+        // Zona Bahaya Sedang (20 Km)
+        var bahayaSedang = L.circle(pusatErupsi, {
+            color: '#ff9800', // Orange for medium risk
+            fillColor: '#ff9800',
+            fillOpacity: 0.4,
+            radius: 20000 // In meters
+        }).bindPopup("Zona Bahaya Sedang (KRB II)");
+
+        // Zona Bahaya Tinggi (10 Km)
+        var bahayaTinggi = L.circle(pusatErupsi, {
+            color: '#f44336', // Red for high risk
+            fillColor: '#f44336',
+            fillOpacity: 0.4,
+            radius: 10000 // In meters
+        }).bindPopup("Zona Bahaya Tinggi (KRB III)");
+
+        // Menggabungkan semua zona bahaya dalam satu group layer
+        var krbGroup = L.layerGroup([bahayaRendah, bahayaSedang, bahayaTinggi]);
+
+        // Layer Control
+        var baseMaps = {
+            "OpenStreetMap": openStreetMap,
+            "CartoDB Light": cartoDB,
+            "Esri Satellite": esriSatellite
+        };
+
+        var overlayMaps = {
+            "Zona Bahaya (KRB)": krbGroup
+        };
+
+        L.control.layers(baseMaps, overlayMaps, {
+            collapsed: true, // Enable minimize functionality
+            position: "topright"
+        }).addTo(map);
+
+        // Menambahkan default basemap dan overlay
+        openStreetMap.addTo(map);
+        krbGroup.addTo(map);
+
+        var formPopup = document.getElementById('form-popup');
+        var dimBackground = document.getElementById('dim-background');
+        var closeButton = document.getElementById('close-button');
+        var addPointBtn = document.getElementById('add-point-btn');
+        var refreshBtn = document.getElementById('refresh-btn');
+        var mahasiswaForm = document.getElementById('mahasiswaForm');
+        var marker = null;
+
+        closeButton.addEventListener('click', function () {
+            formPopup.style.display = 'none';
+            dimBackground.style.display = 'none';
+
+            // Remove the marker when the form is closed
+            if (marker) {
+                marker.remove();
+                marker = null;
+            }
+        });
+
+        addPointBtn.addEventListener('click', function () {
+            if (!marker) {
+                marker = L.marker(map.getCenter(), { draggable: true }).addTo(map);
+                marker.bindPopup('Geser marker ke lokasi yang diinginkan, lalu klik marker untuk menambahkan data.').openPopup();
+
+                marker.on('click', function () {
+                    var latLng = marker.getLatLng();
+                    document.getElementById('latitude').value = latLng.lat;
+                    document.getElementById('longitude').value = latLng.lng;
+                    formPopup.style.display = 'block';
+                    dimBackground.style.display = 'block';
+                });
+            }
+        });
+
+        mahasiswaForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            var disaster = document.getElementById('disaster').value;
+            var deskripsi = document.getElementById('deskripsi').value;
+            var alamat = document.getElementById('alamat').value;
+            var latitude = document.getElementById('latitude').value;
+            var longitude = document.getElementById('longitude').value;
+
+            var newData = {
+                disaster: disaster,
+                deskripsi: deskripsi,
+                alamat: alamat,
+                latitude: parseFloat(latitude),
+                longitude: parseFloat(longitude)
+            };
+
+            fetch('http://192.168.245.121:3000/mahasiswa', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newData)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Sukses:', data);
+
+                    L.marker([latitude, longitude]).addTo(map)
+                        .bindPopup(`
+                            <strong>${disaster} </strong><br>
+                            ${deskripsi}<br>${alamat}
+                        `)
+                        .openPopup();
+
+                    mahasiswaForm.reset();
+                    formPopup.style.display = 'none';
+                    dimBackground.style.display = 'none';
+
+                    // Remove the marker after form submission
+                    marker.remove();
+                    marker = null;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        });
+
+        refreshBtn.addEventListener('click', function () {
+            loadData();
+        });
+
+        function loadData() {
+            fetch('http://192.168.245.121:3000/mahasiswa')
+                .then(response => response.json())
+                .then(data => {
+                    map.eachLayer(function (layer) {
+                        if (layer instanceof L.Marker) {
+                            layer.remove();
+                        }
+                    });
+
+                    data.forEach(student => {
+                        var studentMarker = L.marker([student.latitude, student.longitude]).addTo(map)
+                            .bindPopup(`
+                                <strong>${student.disaster}</strong><br>
+                                ${student.deskripsi}<br>${student.alamat}
+                            `);
+
+                        studentMarker.on('click', function () {
+                            document.getElementById('detail-disaster').innerText = student.disaster;
+                            document.getElementById('detail-deskripsi').innerText = student.deskripsi;
+                            document.getElementById('detail-alamat').innerText = student.alamat;
+                        });
+                    });
+                });
+        }
+
+        loadData();
+    </script>
+</body>
+
+</html>

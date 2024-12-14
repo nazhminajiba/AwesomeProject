@@ -5,16 +5,19 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Profile from './App';
 import Mahasiswa from './Mahasiswa';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faUser, faEdit} from '@fortawesome/free-solid-svg-icons';
+import { faUser, faEdit, faPlusCircle, faList, faMap, faHouse, faNewspaper} from '@fortawesome/free-solid-svg-icons';
 import { faUserGraduate } from '@fortawesome/free-solid-svg-icons';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { WebView } from 'react-native-webview';
-import Createdata from './Createdata';
+import Home from './home';
 import Datamahasiswa from './Listdata';
 import Editdata from './Editdata';
+
+const webmap = require('./Map.html')
+
 function HomeScreen() {
   return (
-    <Createdata />
+    <Home />
   );
 }
 
@@ -29,14 +32,27 @@ function EditdataScreen() {
   );
 }
 
-function WebScreen() {
+function MapsScreen() {
   return (
     <WebView
-        source={{ uri: 'https://github.com/nazhminajiba' }}
-        
+        source={webmap}
       />
   );
 }
+function WebScreen() {
+  return (
+    <WebView
+      source={{ uri: 'https://www.youtube.com/watch?v=WOkmg8tlvck' }}
+      style={{ flex: 1 }}
+    />
+  );}
+
+function ProfileScreen() {
+  return (
+    <Profile />
+  );
+}
+
 
 const Tab = createBottomTabNavigator();
 
@@ -44,22 +60,33 @@ export default function App() {
   return (
     <NavigationContainer>
       <Tab.Navigator>
-        <Tab.Screen name="Profile" component={HomeScreen} 
+        <Tab.Screen name="Home" component={HomeScreen} 
       options={{ headerShown: false,
         tabBarIcon: ({ color }) => (
-          <FontAwesomeIcon icon={faUser} color={color} size={20} />
+          <FontAwesomeIcon icon={faHouse} color={color} size={20} />
         ),}}/>
-        <Tab.Screen name="Mahasiswa" component={DataMahasiswaScreen}  options={{ headerShown: true,
+        <Tab.Screen name="List Data" component={DataMahasiswaScreen}  options={{ headerShown: false,
         tabBarIcon: ({ color }) => (
-          <FontAwesomeIcon icon={faUserGraduate} color={color} size={20} />
+          <FontAwesomeIcon icon={faList} color={color} size={20} />
         ),}}/>
         <Tab.Screen name="Edit" component={EditdataScreen} options={{ headerShown: false,
         tabBarIcon: ({ color }) => (
           <FontAwesomeIcon icon={faEdit} color={color} size={20} />
         ),}}/>
-      <Tab.Screen name="Github" component={WebScreen}  options={{ 
+        <Tab.Screen name="Peta" component={MapsScreen}  options={{ headerShown: false,
         tabBarIcon: ({ color }) => (
-          <FontAwesomeIcon icon={faGithub} color={color} size={20} />
+          <FontAwesomeIcon icon={faMap} color={color} size={20} />
+        ),}}/>
+        <Tab.Screen
+          name="Update"
+          component={WebScreen}
+          options={{headerShown: false,
+            tabBarIcon: ({ color }) => <FontAwesomeIcon icon={faNewspaper} color={color} size={20} />,
+          }}
+        />
+      <Tab.Screen name="Profile" component={ProfileScreen}  options={{ headerShown: false,
+        tabBarIcon: ({ color }) => (
+          <FontAwesomeIcon icon={faUser} color={color} size={20} />
         ),}}/>
 
       </Tab.Navigator>
