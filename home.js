@@ -52,7 +52,7 @@ const EarlyWarningSystem = () => {
         {/* Introductory Section */}
         <View style={styles.card}>
           <Text style={styles.introText}>
-            Selamat datang di Early Warning System, aplikasi yang memberikan informasi terkini mengenai sistem peringatan dini untuk berbagai potensi bencana di wilayah Sleman. Aplikasi ini bertujuan untuk meningkatkan kesiapsiagaan masyarakat terhadap ancaman bencana seperti awan panas, banjir lahar, dan tanah longsor.
+            Selamat datang Sleman Guard, aplikasi yang memberikan informasi terkini mengenai sistem peringatan dini untuk berbagai potensi bencana di wilayah Sleman. Aplikasi ini bertujuan untuk meningkatkan kesiapsiagaan masyarakat terhadap ancaman bencana seperti awan panas, banjir lahar, dan tanah longsor.
           </Text>
         </View>
 
@@ -69,7 +69,7 @@ const EarlyWarningSystem = () => {
               >
                 <Image source={require('./2010.jpg')} style={styles.listImage} />
               </TouchableOpacity>
-              <Text style={styles.listItem}>1. Awan Panas</Text>
+              <Text style={styles.listItem}>1. EWS Awan Panas</Text>
             </View>
 
             {/* Item 2 */}
@@ -80,7 +80,7 @@ const EarlyWarningSystem = () => {
               >
                 <Image source={require('./Banjirlahar.jpg')} style={styles.listImage} />
               </TouchableOpacity>
-              <Text style={styles.listItem}>2. Banjir Lahar</Text>
+              <Text style={styles.listItem}>2. EWS Banjir Lahar</Text>
             </View>
 
             {/* Item 3 */}
@@ -91,7 +91,7 @@ const EarlyWarningSystem = () => {
               >
                 <Image source={require('./tanahlongsor.jpg')} style={styles.listImage} />
               </TouchableOpacity>
-              <Text style={styles.listItem}>3. Tanah Longsor</Text>
+              <Text style={styles.listItem}>3. EWS Tanah Longsor</Text>
             </View>
           </ScrollView>
         </View>

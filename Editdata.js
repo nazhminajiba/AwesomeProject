@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, View, TextInput, Button, StyleSheet, Text, FlatList, TouchableOpacity, Alert, ScrollView } from 'react-native';
+import { SafeAreaView, View, TextInput, Button, StyleSheet, Text, FlatList, TouchableOpacity, Alert } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faPenToSquare, faMountain, faSync, faSave } from '@fortawesome/free-solid-svg-icons';
 
@@ -82,79 +82,64 @@ const Createdata = () => {
     };
 
     return (
-        <SafeAreaView>
-            <View>
-                {isLoading ? (
-                    <View style={{ alignItems: 'center', marginTop: 20 }}>
-                        <Text style={styles.cardtitle}>Loading...</Text>
-                    </View>
-                ) : (
-                    <ScrollView>
-                        <View style={styles.formContainer}>
-                            <Text style={styles.title}>Edit Data</Text>
-                            <View style={styles.form}>
-                                <TextInput
-                                    placeholder="Nama EWS"
-                                    value={disaster}
-                                    onChangeText={setDisaster}
-                                    style={styles.input}
-                                />
-                                <TextInput
-                                    placeholder="Deskripsi EWS"
-                                    value={deskripsi}
-                                    onChangeText={setDeskripsi}
-                                    style={styles.input}
-                                />
-                                <TextInput
-                                    placeholder="Alamat"
-                                    value={alamat}
-                                    onChangeText={setAlamat}
-                                    style={styles.input}
-                                />
-                                <TouchableOpacity style={styles.button} onPress={submit}>
-                                    <FontAwesomeIcon icon={faSave} size={18} color="white" />
-                                    <Text style={styles.buttonText}> Save Changes</Text>
-                                </TouchableOpacity>
+        <SafeAreaView style={{ flex: 1 }}>
+            <View style={styles.formContainer}>
+                <Text style={styles.title}>Edit Data</Text>
+                <View style={styles.form}>
+                    <TextInput
+                        placeholder="Nama EWS"
+                        value={disaster}
+                        onChangeText={setDisaster}
+                        style={styles.input}
+                    />
+                    <TextInput
+                        placeholder="Deskripsi EWS"
+                        value={deskripsi}
+                        onChangeText={setDeskripsi}
+                        style={styles.input}
+                    />
+                    <TextInput
+                        placeholder="Alamat"
+                        value={alamat}
+                        onChangeText={setAlamat}
+                        style={styles.input}
+                    />
+                    <TouchableOpacity style={styles.button} onPress={submit}>
+                        <FontAwesomeIcon icon={faSave} size={18} color="white" />
+                        <Text style={styles.buttonText}> Save Changes</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+
+            <FlatList
+                data={dataUser}
+                keyExtractor={(item) => item.id.toString()}
+                onRefresh={refreshPage}
+                refreshing={refresh}
+                ListHeaderComponent={
+                    <TouchableOpacity style={styles.refreshButton} onPress={refreshPage}>
+                        <FontAwesomeIcon icon={faSync} size={18} color="white" />
+                        <Text style={styles.refreshButtonText}> Refresh Data</Text>
+                    </TouchableOpacity>
+                }
+                renderItem={({ item }) => (
+                    <TouchableOpacity onPress={() => selectItem(item)}>
+                        <View style={styles.card}>
+                            <View style={styles.avatar}>
+                                <FontAwesomeIcon icon={faMountain} size={50} color={item.color || '#FFD700'} />
+                            </View>
+                            <View style={styles.cardContent}>
+                                <Text style={styles.cardtitle}>{item.disaster}</Text>
+                                <Text style={styles.cardDescription}>{item.deskripsi}</Text>
+                                <Text style={styles.cardAddress}>{item.alamat}</Text>
+                            </View>
+                            <View style={styles.editIconContainer}>
+                                <FontAwesomeIcon icon={faPenToSquare} size={20} />
                             </View>
                         </View>
-
-                        <View style={styles.divider}></View>
-
-                        <TouchableOpacity style={styles.refreshButton} onPress={refreshPage}>
-                            <FontAwesomeIcon icon={faSync} size={18} color="white" />
-                            <Text style={styles.refreshButtonText}> Refresh Data</Text>
-                        </TouchableOpacity>
-
-                        <FlatList
-                            data={dataUser}
-                            keyExtractor={(item) => item.id.toString()}
-                            onRefresh={refreshPage}
-                            refreshing={refresh}
-                            renderItem={({ item }) => (
-                                <TouchableOpacity onPress={() => selectItem(item)}>
-                                    <View style={styles.card}>
-                                        <View style={styles.avatar}>
-                                            <FontAwesomeIcon icon={faMountain} size={50} color={item.color || '#FFD700'} />
-                                        </View>
-                                        <View style={styles.cardContent}>
-                                            <Text style={styles.cardtitle}>{item.disaster}</Text>
-                                            <ScrollView style={styles.cardDescription}>
-                                                <Text>{item.deskripsi}</Text>
-                                            </ScrollView>
-                                            <ScrollView style={styles.cardAddress}>
-                                                <Text>{item.alamat}</Text>
-                                            </ScrollView>
-                                        </View>
-                                        <View style={styles.editIconContainer}>
-                                            <FontAwesomeIcon icon={faPenToSquare} size={20} />
-                                        </View>
-                                    </View>
-                                </TouchableOpacity>
-                            )}
-                        />
-                    </ScrollView>
+                    </TouchableOpacity>
                 )}
-            </View>
+            />
         </SafeAreaView>
     );
 };
@@ -178,10 +163,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         backgroundColor: '#fff',
         shadowColor: '#FF6347',
-        shadowOffset: {
-            width: 1,
-            height: 1,
-        },
+        shadowOffset: { width: 1, height: 1 },
         shadowOpacity: 0.2,
         shadowRadius: 10,
         elevation: 5,
@@ -232,10 +214,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         backgroundColor: 'white',
         shadowColor: '#ddd',
-        shadowOffset: {
-            width: 1,
-            height: 1,
-        },
+        shadowOffset: { width: 1, height: 1 },
         shadowOpacity: 0.1,
         shadowRadius: 5,
         elevation: 3,
@@ -258,18 +237,14 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    divider: {
-        height: 1,
-        backgroundColor: '#ddd',
-        marginVertical: 10,
-    },
     cardContent: {
         flex: 1,
     },
     cardDescription: {
-        maxHeight: 100,
+        color: '#666',
+        marginBottom: 4,
     },
     cardAddress: {
-        maxHeight: 60,
+        color: '#888',
     },
 });
