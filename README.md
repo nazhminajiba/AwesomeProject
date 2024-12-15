@@ -14,20 +14,23 @@ Sleman Guard adalah aplikasi peta interaktif berbasis web yang dirancang untuk m
 
 ### **1. Antarmuka Pengguna (Frontend)**
 
-- HTML: Struktur dokumen dan elemen UI seperti form dan tombol.
-- CSS: Gaya dan tata letak, termasuk animasi dan efek visual.
-- JavaScript: Logika interaktif untuk peta, formulir, dan integrasi API.
+- HTML, CSS, JavaScript: Dasar untuk membangun antarmuka pengguna.
+- React Native: Untuk pengembangan aplikasi mobile multiplatform (iOS dan Android).
+- React Navigation: Untuk mengatur navigasi antar layar pada aplikasi mobile
 
 ### **2. Library dan Framework**
 
 - Leaflet.js: Library JavaScript untuk peta interaktif.
 - Fetch API: Untuk komunikasi antara frontend dan backend.
+- Google Maps API: Untuk membuka titik EWS di google maps.
 
 ### **3. Backend**
 
-- Endpoint API: Berbasis REST untuk mengelola data EWS.
-  - **POST /mahasiswa**: Menambahkan data EWS baru.
-  - **GET /mahasiswa**: Mengambil data EWS yang ada.
+- JSON Server: Sebagai basis data lokal berbasis file JSON untuk menyediakan data API REST dengan cepat.
+  - **POST**: Menambahkan data EWS.
+  - **GET**: Mengambil data EWS yang ada.
+  - **Patch**: Mengubah sebagian data EWS berdasarkan ID.
+  - **Delete**: Menghapus data EWS berdasarkan ID.
 
 ### **4. Sumber Data**
 
