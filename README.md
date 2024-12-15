@@ -72,6 +72,6 @@ Sleman Guard adalah aplikasi peta interaktif berbasis web yang dirancang untuk m
 
 ### **6. Profile**
 
-👤 Halaman untuk melihat informasi profil, termasuk nama, email, dan pengaturan lainnya.
+👤 Halaman untuk melihat informasi profil, termasuk nama, NIM, dan pengaturan lainnya.
 
 <img src="Image/profile.jpeg" alt="Halaman Profil" width="250px">
