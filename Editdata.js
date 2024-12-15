@@ -94,19 +94,19 @@ const Createdata = () => {
                             <Text style={styles.title}>Edit Data</Text>
                             <View style={styles.form}>
                                 <TextInput
-                                    placeholder="Disaster"
+                                    placeholder="Nama EWS"
                                     value={disaster}
                                     onChangeText={setDisaster}
                                     style={styles.input}
                                 />
                                 <TextInput
-                                    placeholder="Description"
+                                    placeholder="Deskripsi EWS"
                                     value={deskripsi}
                                     onChangeText={setDeskripsi}
                                     style={styles.input}
                                 />
                                 <TextInput
-                                    placeholder="Address"
+                                    placeholder="Alamat"
                                     value={alamat}
                                     onChangeText={setAlamat}
                                     style={styles.input}

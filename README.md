@@ -1,79 +1,83 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# *🌍 SLEMAN GUARD*
 
-# Getting Started
+Sleman Guard adalah aplikasi peta interaktif berbasis web yang dirancang untuk membantu pengelolaan dan pemantauan titik Early Warning System (EWS) di kawasan rawan bencana. Aplikasi ini memungkinkan pengguna untuk menambahkan, melihat, dan mengelola data titik EWS beserta deskripsinya secara real-time dengan antarmuka yang menarik dan mudah digunakan.
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+# *✨ Fitur Utama:*
 
-## Step 1: Start the Metro Server
+🗺️ Pemetaan zona risiko bencana berdasarkan radius dari pusat erupsi Gunung Merapi.
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+➕ Penambahan titik data EWS melalui antarmuka pengguna yang interaktif.
 
-To start Metro, run the following command from the _root_ of your React Native project:
+📊 Pengelolaan data EWS menggunakan API untuk penyimpanan dan pemanggilan data.
 
-```bash
-# using npm
-npm start
+ # *🛠️ Komponen Pembangun Produk*
 
-# OR using Yarn
-yarn start
-```
+### **1. Antarmuka Pengguna (Frontend)**
 
-## Step 2: Start your Application
+HTML: Struktur dokumen dan elemen UI seperti form dan tombol.
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+CSS: Gaya dan tata letak, termasuk animasi dan efek visual.
 
-### For Android
+JavaScript: Logika interaktif untuk peta, formulir, dan integrasi API.
 
-```bash
-# using npm
-npm run android
+### **2. Library dan Framework**
 
-# OR using Yarn
-yarn android
-```
+Leaflet.js: Library JavaScript untuk peta interaktif.
 
-### For iOS
+Fetch API: Untuk komunikasi antara frontend dan backend.
 
-```bash
-# using npm
-npm run ios
+### **3. Backend**
 
-# OR using Yarn
-yarn ios
-```
+Endpoint API: Berbasis REST untuk mengelola data EWS.
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+POST /mahasiswa: Menambahkan data EWS baru.
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+GET /mahasiswa: Mengambil data EWS yang ada.
 
-## Step 3: Modifying your App
+### **4. Sumber Data**
 
-Now that you have successfully run the app, let's modify it.
+Data Awal Zona Bahaya: Didefinisikan secara manual berdasarkan radius zona bahaya dari Gunung Merapi.
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
+Data Titik EWS: Website mitigasi BPBD Sleman
 
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
+# *🖼️ Tangkapan Layar Komponen Penting Produk* #
 
-## Congratulations! :tada:
+### **1. Home**
 
-You've successfully run and modified your React Native App. :partying_face:
+🏠 Halaman utama untuk menyambut pengguna dan memberikan informasi umum mengenai sistem EWS (Early Warning System).
 
-### Now what?
+![Halaman Home](Image/home1.jpeg)
+![Halaman Home](Image/home2.jpeg)
+![Halaman Home](Image/home3.jpeg)
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
+### **2. List Data**
 
-# Troubleshooting
+📋 Menampilkan daftar data EWS yang telah tersimpan, termasuk lokasi, status, dan tindakan yang dapat diambil, seperti menghapus data.
 
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+![List Data EWS](Image/list.jpeg)
 
-# Learn More
+### **3. Edit Data**
 
-To learn more about React Native, take a look at the following resources:
+✏️ Menyediakan formulir untuk mengedit data EWS yang sudah ada, termasuk perubahan lokasi, status, dan parameter lainnya.
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+![Formulir Edit Data EWS](Image/edit.jpeg)
+
+### **4. Map**
+
+🗺️ Menampilkan peta interaktif dengan zona bahaya yang memiliki radius berbeda, serta marker yang menunjukkan informasi terkait EWS.
+
+![Antarmuka Peta](Image/map2.jpeg)
+![Antarmuka Peta](Image/map1.jpeg)
+![Antarmuka Peta](Image/map3.jpeg)
+
+### **5. Update**
+
+🔄 Formulir menampilkan aktifitas merapi secara live.
+
+![Formulir Update Data EWS](Image/update.jpeg)
+
+### **6. Profile**
+
+👤 Halaman untuk melihat informasi profil, termasuk nama, email, dan pengaturan lainnya.
+
+![Halaman Profil](Image/profile.jpeg)
